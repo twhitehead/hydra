@@ -2,60 +2,59 @@
 [% PROCESS common.tt %]
 [% USE HTML %]
 
-<form class="form-horizontal" action="[% IF create %][% c.uri_for('/project' project.name 'create-release/submit') %][% ELSE %][% c.uri_for('/release' project.name release.name 'submit') %][% END %]" method="post">
+<form action="[% IF create %][% c.uri_for('/project' project.name 'create-release/submit') %][% ELSE %][% c.uri_for('/release' project.name release.name 'submit') %][% END %]" method="post">
 
-<fieldset>
-
-  <div class="control-group">
-    <label class="control-label">Identifier</label>
-    <div class="controls">
-      <input type="text" class="span3" name="name" [% HTML.attributes(value => release.name) %]/>
+  <div class="form-group row">
+    <label class="col-sm-3" for="editreleasename">Identifier</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="editreleasename" name="name" [% HTML.attributes(value => release.name) %]/>
     </div>
   </div>
 
-  <div class="control-group">
-    <label class="control-label">Description</label>
-    <div class="controls">
-      <input type="text" class="span3" name="description" [% HTML.attributes(value => release.description) %]/>
+  <div class="form-group row">
+    <label class="col-sm-3" for="editreleasedescription">Description</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="editreleasedescription" name="description" [% HTML.attributes(value => release.description) %]/>
     </div>
   </div>
 
-  <h3>Release members</h3>
+  <div class="page-header">Release members</div>
 
-  <p><em>Note:</em> to add a build to this release, go to the build’s
-  information page and click on “Add to release”.</p>
+  <small class="form-text text-muted pb-3">
+    <em>Note:</em> to add a build to this release, go to the build’s information page and click on “Add to release”.
+  </small>
 
   [% FOREACH m IN members %]
 
-    <div class="releaseMember control-group">
-      <label class="control-label">Build [% m.build.id %] Label</label>
-      <div class="controls">
-        <input type="text" class="span3" name="member-[% m.build.id %]-description" [% HTML.attributes(value => m.description) %]/>
-        <button class="btn btn-warning" type="button" onclick='$(this).parents(".releaseMember").remove()'><i class="icon-trash icon-white"></i></button>
+    <div class="form-group row">
+      <label class="col-sm-3">Build [% m.build.id %] Label</label>
+      <div class="col-sm-9">
+        <div class="input-group">
+          <input type="text" class="form-control" name="member-[% m.build.id %]-description" [% HTML.attributes(value => m.description) %]/>
+          <div class="input-group-prepend">
+            <button class="btn btn-warning" type="button" onclick='$(this).parents(".releaseMember").remove()'><i class="icon-trash icon-white"></i></button>
+          </div>
+        </div>
       </div>
     </div>
 
   [% END %]
 
-  <div class="form-actions">
-    <button type="submit" class="btn btn-primary">
-      <i class="icon-ok icon-white"></i>
-      [%IF create %]Create[% ELSE %]Apply changes[% END %]
+  <button type="submit" class="btn btn-primary">
+    <i class="icon-ok icon-white"></i>
+    [%IF create %]Create[% ELSE %]Apply changes[% END %]
+  </button>
+  [% IF !create %]
+    <button id="delete-release" type="submit" class="btn btn-danger" name="action" value="delete">
+      <i class="icon-trash icon-white"></i>
+      Delete this release
     </button>
-    [% IF !create %]
-      <button id="delete-release" type="submit" class="btn btn-danger" name="action" value="delete">
-        <i class="icon-trash icon-white"></i>
-        Delete this release
-      </button>
-      <script type="text/javascript">
-        $("#delete-release").click(function() {
-          return confirm("Are you sure you want to delete this release?");
-        });
-      </script>
-    [% END %]
-  </div>
-
-</fieldset>
+    <script type="text/javascript">
+      $("#delete-release").click(function() {
+        return confirm("Are you sure you want to delete this release?");
+      });
+    </script>
+  [% END %]
 
 </form>
 
