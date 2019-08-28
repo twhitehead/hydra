@@ -5,7 +5,7 @@
 
 <p>
   <em>Released on [% INCLUDE renderDateTime timestamp = release.timestamp %].</em>
-  <a class="btn btn-primary" href="[% c.uri_for('/release' project.name release.name "edit") %]"><i class="icon-edit"></i>Edit release</a>
+  <a class="btn btn-primary" href="[% c.uri_for('/release' project.name release.name "edit") %]"><i class="fas fa-edit"></i>Edit release</a>
 </p>
 
 [% IF !members %]

@@ -32,7 +32,7 @@
         <div class="input-group">
           <input type="text" class="form-control" name="member-[% m.build.id %]-description" [% HTML.attributes(value => m.description) %]/>
           <div class="input-group-prepend">
-            <button class="btn btn-warning" type="button" onclick='$(this).parents(".releaseMember").remove()'><i class="icon-trash icon-white"></i></button>
+            <button class="btn btn-warning" type="button" onclick='$(this).parents(".releaseMember").remove()'><i class="fas fa-trash"></i></button>
           </div>
         </div>
       </div>
@@ -41,12 +41,12 @@
   [% END %]
 
   <button type="submit" class="btn btn-primary">
-    <i class="icon-ok icon-white"></i>
+    <i class="fas fa-check"></i>
     [%IF create %]Create[% ELSE %]Apply changes[% END %]
   </button>
   [% IF !create %]
     <button id="delete-release" type="submit" class="btn btn-danger" name="action" value="delete">
-      <i class="icon-trash icon-white"></i>
+      <i class="fas fa-trash"></i>
       Delete this release
     </button>
     <script type="text/javascript">
